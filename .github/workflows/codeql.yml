@@ -11,8 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ matrix.language == 'swift' && 'macos-latest' || 'ubuntu-latest' }}
-    timeout-minutes: ${{ matrix.language == 'swift' && 120 || 360 }}
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
@@ -24,22 +23,22 @@ jobs:
       matrix:
         include:
           - language: "c-cpp"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "csharp"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "go"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "java-kotlin"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "javascript-typescript"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "python"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "ruby"
-            build-mode: "auto"
+            build-mode: "none"
           - language: "swift"
-            build-mode: "auto"
-            
+            build-mode: "none"
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
