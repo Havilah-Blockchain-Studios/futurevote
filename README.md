@@ -22,6 +22,8 @@ The Future Vote Platform facilitates secure and transparent voting using Ethereu
 - **Web Interface:** Allows users to access the voting system via a user-friendly interface, facilitating the casting of votes.
 - **Solidity:** Smart contract development language for Ethereum blockchain.
 - **Python:** Programming language used for backend development, integration with Ethereum blockchain, and communication with the frontend.
+- **CodeQL:** Security analysis tool for automated vulnerbility and bug detection.
+- **Pixeebot:** Security managment tool for resolving issues and improving code quality in an automated manner.
 
 ## Getting Started
 1. Clone the repository.
