@@ -22,21 +22,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - language: "c-cpp"
-            build-mode: "none"
-          - language: "csharp"
-            build-mode: "none"
-          - language: "go"
-            build-mode: "none"
-          - language: "java-kotlin"
-            build-mode: "none"
           - language: "javascript-typescript"
             build-mode: "none"
           - language: "python"
-            build-mode: "none"
-          - language: "ruby"
-            build-mode: "none"
-          - language: "swift"
             build-mode: "none"
 
     steps:
