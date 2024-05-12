@@ -1,52 +1,48 @@
 name: "CodeQL"
+on: push
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '37 5 * * 1'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
+    name: Analyze
     runs-on: ubuntu-latest
+
     permissions:
       security-events: write
-      packages: read
       actions: read
       contents: read
 
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - language: "javascript-typescript"
-            build-mode: "none"
-          - language: "python"
-            build-mode: "none"
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        # We must fetch at least the immediate parents so that if this is
+        # a pull request then we can checkout the head.
+        fetch-depth: 2
+    
+    - name: Set up codeql
+      uses: actions/setup-python@v3
+      with:
+        java-version: 17
+        distribution: temurin
+        
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
+        languages: java
+        config-file: ./.github/codeql/codeql-config.yml
 
-    - if: matrix.build-mode == 'manual'
-      run: |
-        echo 'If you are using a "manual" build mode for one or more of the' \
-          'languages you are analyzing, replace this with the commands to build' \
-          'your code, for example:'
-        echo '  make bootstrap'
-        echo '  make release'
-        exit 1
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "languages/${{ matrix.language }}"
+        category: "/language:python"
