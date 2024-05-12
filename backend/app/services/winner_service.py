@@ -4,4 +4,4 @@ def calculate_square(number):
 
 square_of_number = calculate_square("5")
 
-print("The square of the number is:", square_of_number)
+print("The square of the number is:", square_of_number);
