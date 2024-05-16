@@ -221,8 +221,8 @@ def xxe_lab(request):
     else:
         return redirect('login')
 
-@csrf_exempt
 @receiver(request_finished)
+@csrf_exempt
 def xxe_see(request):
     if request.user.is_authenticated:
 
