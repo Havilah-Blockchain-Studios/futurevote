@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-rlx9to&m1$m*br@3b2aw-yq9h$qlrt7vu)32x(d9$93@k8fbns"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+MODE = os.getenv("MODE", "development")
+if MODE == "development":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -56,8 +63,8 @@ ROOT_URLCONF = "futurevote.urls"
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
 
@@ -83,12 +90,28 @@ WSGI_APPLICATION = "futurevote.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if MODE == "development":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME_DEV"),
+            "USER": os.getenv("DB_USER_DEV"),
+            "PASSWORD": os.getenv("DB_PASSWORD_DEV"),
+            "HOST": os.getenv("DB_HOST_DEV"),
+            "PORT": os.getenv("DB_PORT_DEV"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME_PROD"),
+            "USER": os.getenv("DB_USER_PROD"),
+            "PASSWORD": os.getenv("DB_PASSWORD_PROD"),
+            "HOST": os.getenv("DB_HOST_PROD"),
+            "PORT": os.getenv("DB_PORT_PROD"),
+        }
+    }
 
 
 # Password validation
@@ -127,7 +150,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static"
-
 
 
 # Default primary key field type
