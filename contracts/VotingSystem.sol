@@ -4,7 +4,7 @@
  * @author GOODNESS E. (COAT)
  * @notice This contract is owned by Havlilah Blockchain Studios, Inc.
  * @dev Created on 15th of May, 2024.
- */
+*/
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
@@ -52,5 +52,23 @@ contract DID is ERC721URIStorage, Ownable {
  * @dev This contract manages the voting functionality for the Future Vote system.
  */
 contract FutureVote is Ownable {
-    // Your voting functionality code will go here
-}
+
+    /** Constants **/
+    DID immutable voterDid;
+
+    /** VARIABLES **/
+    mapping(address => uint) public voters; //holds voters data
+
+    constructor() {
+        voterDid = new DID();
+    }   
+
+    /** FUNCTIONS **/
+
+    /** To register a new voter **/
+    function registerVoter(string memory voterUri) external returns (bool) {
+        //mint new DID for a voter
+        voters[msg.sender] = voterDid.mint(voterUri, msg.sender);
+        return true;
+    }
+ }
