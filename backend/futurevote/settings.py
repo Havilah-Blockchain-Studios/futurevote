@@ -93,23 +93,15 @@ WSGI_APPLICATION = "futurevote.wsgi.application"
 if MODE == "development":
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME_DEV"),
-            "USER": os.getenv("DB_USER_DEV"),
-            "PASSWORD": os.getenv("DB_PASSWORD_DEV"),
-            "HOST": os.getenv("DB_HOST_DEV"),
-            "PORT": os.getenv("DB_PORT_DEV"),
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DB_NAME_PROD"),
-            "USER": os.getenv("DB_USER_PROD"),
-            "PASSWORD": os.getenv("DB_PASSWORD_PROD"),
-            "HOST": os.getenv("DB_HOST_PROD"),
-            "PORT": os.getenv("DB_PORT_PROD"),
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
