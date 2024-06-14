@@ -1,3 +1,4 @@
 x = 'foo'
-if x.startswith("foo") or x.startswith("bar"):
+if x.startswith(("foo", "bar")):
     ...
+SESSION_COOKIE_SECURE = True
