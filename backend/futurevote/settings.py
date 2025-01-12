@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 MODE = os.getenv("MODE", "development")
 if MODE == "development":
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = False
 
